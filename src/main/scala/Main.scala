@@ -1,13 +1,8 @@
-import module1.{executor, future, threads, try_}
-import module1.threads.ToyFuture
-import module2.implicits.{implicit_conversions, implicit_scopes}
+import module1.{future, list, opt}
+import module2.implicits.implicit_scopes
 
-import java.util.concurrent.Executor
-import scala.concurrent.duration.DurationInt
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.language.postfixOps
-import scala.util.Try
-import module1.{list, opt}
 
 object Main {
 
@@ -73,7 +68,7 @@ object Main {
       } yield (r1 + r2)
     }
 
-    println(sumItUp)
+
     println("Hello world")
 
     println("  Module 01 EX 01 ")
