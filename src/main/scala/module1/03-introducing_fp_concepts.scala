@@ -211,7 +211,7 @@ object opt {
    */
   def printIfAny[A](value: Option[A]): Unit = value match {
     case Option.Some(v) => println(v)
-    case Option.None => _
+    case Option.None =>
   }
 
   /**
@@ -230,13 +230,14 @@ object opt {
    * Реализовать метод filter, который будет возвращать не пустой Option
    * в случае если исходный не пуст и предикат от значения = true
    */
-  def filter[A](value: Option[A], pred: A => Boolean): Option[A] =
+  def filter[A](value: Option[A])(pred: A => Boolean): Option[A] =
     value.flatMap{v =>
       if(pred(v)) value else Option.None
     }
 /*    value match {
     case Option.Some(v) if pred(v) => value
     case Option.None => Option.None
+    case _ =>
   }
   */
  }
@@ -350,10 +351,12 @@ object list {
    * Написать функцию incList котрая будет принимать список Int и возвращать список,
    * где каждый элемент будет увеличен на 1
    */
-  def incList(intList: List[Int]): List[Int] = intList match {
-    case List.::(head, tail) => List.::(head + 1, incList(tail))
-    case List.Nil => List.Nil
-  }
+  def incList(intList: List[Int]): List[Int] =
+    map(intList)(_+1)
+//    intList match {
+//    case List.::(head, tail) => List.::(head + 1, incList(tail))
+//    case List.Nil => List.Nil
+//  }
 
   /**
    *
