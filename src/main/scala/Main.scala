@@ -1,12 +1,8 @@
-import module1.{executor, future, threads, try_}
-import module1.threads.ToyFuture
-import module2.implicits.{implicit_conversions, implicit_scopes}
+import module1.{future, list, opt}
+import module2.implicits.implicit_scopes
 
-import java.util.concurrent.Executor
-import scala.concurrent.duration.DurationInt
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.language.postfixOps
-import scala.util.Try
 
 object Main {
 
@@ -71,6 +67,30 @@ object Main {
         r2 <- v2
       } yield (r1 + r2)
     }
+
+
+    println("Hello world")
+
+    println("  Module 01 EX 01 ")
+
+    println("=================Option=============")
+    opt.printIfAny(opt.Option.Some("some"))
+    opt.printIfAny(opt.Option.None)
+    println(opt.zip(opt.Option.Some("a"), opt.Option.Some("b")))
+    println(opt.filter(opt.Option.Some(5))(x => x < 10)) // 5
+    println(opt.filter(opt.Option.Some(5))(x => x > 10)) // None
+    println("=================List===============")
+    println(list.mkString(list.List(111,222,3333,4444))("<"))
+    println(list.::(55)(list.List(66,77,88)))
+    println(list.::(55)(list.List.Nil))
+    println(list.cons(1,5,6))
+    println(s"Reverse - ${list.reverse(list.List(1,2,3,4), list.List.Nil)}")
+    println(list.map(list.List(1,2,3,4))(x => x+2))
+    println(list.filter(list.List(1,2,3,4))(x => x > 2))
+    println(list.incList(list.List(1,2,3,4)))
+    println(list.shoutString(list.List("help", "me", "finish", "this", "course")))
+
+
 
 
     def rates3 =
