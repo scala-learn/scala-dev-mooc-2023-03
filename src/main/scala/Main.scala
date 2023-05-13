@@ -1,3 +1,4 @@
+import futures.task_futures_sequence
 import module1.{future, list, opt}
 import module2.implicits.implicit_scopes
 
@@ -104,6 +105,8 @@ object Main {
    // Thread.sleep(4000)
 
     implicit_scopes.result
-
+    val fu = task_futures_sequence.fullSequence(List(Future(20), Future(throw new RuntimeException("RuntimeException")), Future(12), Future(15), Future(1/0)))
+    Thread.sleep(2000)
+    println(fu)
   }
 }

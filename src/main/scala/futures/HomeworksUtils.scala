@@ -1,4 +1,4 @@
-package module1.futures
+package futures
 
 object HomeworksUtils {
 
