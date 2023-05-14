@@ -20,7 +20,7 @@ object task_futures_sequence {
   def fullSequence[A](futures: List[Future[A]])
                      (implicit ex: ExecutionContext): Future[(List[A], List[Throwable])] = {
 
-    futures.foldLeft(Future(List.empty[A], List.empty[Throwable])){ (futureTuple, future) =>
+    futures.foldRight(Future(List.empty[A], List.empty[Throwable])){ (future, futureTuple) =>
       futureTuple.flatMap { listAlistThrowable =>
         val valList = listAlistThrowable._1
         val throwList = listAlistThrowable._2
