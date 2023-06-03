@@ -3,14 +3,13 @@ package module1
 import module1.utils.NameableThreads
 
 import java.io.File
+import java.util.concurrent.{Executor, ExecutorService, Executors}
 import java.util.{Timer, TimerTask}
-import java.util.concurrent.{Callable, Executor, ExecutorService, Executors, ForkJoinPool, ThreadFactory, ThreadPoolExecutor}
 import scala.collection.mutable
-import scala.concurrent.duration.DurationInt
-import scala.concurrent.{Await, ExecutionContext, Future, Promise, TimeoutException}
+import scala.concurrent.{ExecutionContext, Future, Promise, TimeoutException}
 import scala.io.{BufferedSource, Source}
 import scala.language.{existentials, postfixOps}
-import scala.util.{Failure, Success, Try, Using}
+import scala.util.{Failure, Success, Try}
 
 object threads {
 
@@ -288,14 +287,19 @@ object promise {
       p.future
     }
 
-    def make[T](v: => T, timeout: Long): Future[T] = {
+    def make[T](v: => T, timeout: Long)(implicit ec: ExecutionContext): Future[T] = {
       val p = Promise[T]
       val timer = new Timer(true)
       val task = new TimerTask {
-        override def run(): Unit = ???
+        override def run(): Unit = p.complete(Try(v))
       }
       timer.schedule(task, timeout)
-      ???
+      //Идея в том, что если выйдет время и данные еще не посчитались то в promise будет пусто
+      p.future.value match {
+        case Some(Success(v)) => p.success(v).future
+        case Some(Failure(ex)) => p.failure(ex).future
+        case None => p.failure(new TimeoutException()).future
+      }
     }
   }
 }
