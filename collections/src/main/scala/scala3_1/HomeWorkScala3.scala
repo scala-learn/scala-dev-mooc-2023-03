@@ -1,5 +1,6 @@
 package scala3_1
 
+// 2 реализуйте паттерн "магнит" из ссылки выше для String, Float, Int
 object Completions:
 
   enum CompletionArg:
@@ -31,16 +32,12 @@ object HomeWorkScala3:
   extension(intValue: Int)
     def plusConcat(other: Int) = intValue.toString.concat(other.toString)
 
-  // 2 реализуйте паттерн "магнит" из ссылки выше для String, Float, Int
-
-
-
-  @main def program ={
+  @main def program =
     println(22 plusConcat 34)
     complete("Some string")
     complete(22)
     complete(123.44F)
- }
+
 
 end HomeWorkScala3
 
